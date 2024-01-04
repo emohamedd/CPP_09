@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:26:15 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/04 09:52:50 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/04 13:28:25 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,15 @@ int is_valid_date(std::string year, std::string mounth, std::string day){
     return 1;
 }
 
-bool validateData(std::map<std::string, std::string>& data) {
-    for (std::map<std::string , std::string>::iterator it = data.begin(); it != data.end(); ++it) {
+void validateData(std::multimap<std::string, std::string>& data) {
+    for (std::multimap<std::string , std::string>::iterator it = data.begin(); it != data.end(); ++it) {
         int length = it->first.size();
         if (it->first[length - 1] != ' ' || it->second[0] != ' ') {
             std::cerr << "Error: input.txt is not in the correct format" << std::endl;
-            return false;
         }
 
         if (it->first.size() != 11 || it->first[4] != '-' || it->first[7] != '-') {
             std::cerr << "Error: input.txt is not in the correct format" << std::endl;
-            return false;
         }
 
         for (size_t j = 0; j < it->first.length(); j++) {
@@ -61,20 +59,17 @@ bool validateData(std::map<std::string, std::string>& data) {
 
             if (isalpha(it->first[j])) {
                 std::cerr << "Error: input.txt is not in the correct format" << std::endl;
-                return false;
             }
         }
-
+    
         for (size_t i = 0; i < it->second.length(); i++) {
             if (it->second[i] == ' ') {
                 i++;
                 if (isalpha(it->second[i]) || !isdigit(it->second[i])) {
                     std::cerr << "Error: input.txt is not in the correct format" << std::endl;
-                    return false;
                 }
-                if (atof(it->second.c_str() + i) == 0 || atof(it->second.c_str() + i) > 1000) {
+                if (std::atof(it->second.c_str()) > 1000) {
                     std::cerr << "Error: input.txt is not in the correct format" << std::endl;
-                    return false;
                 }
             }
         }
@@ -86,8 +81,22 @@ bool validateData(std::map<std::string, std::string>& data) {
         std::getline(new_, day, ' ');
         if (is_valid_date(year, month, day) == 0) {
             std::cerr << "Error: Invalid Date" << std::endl;
-            return false;
         }
     }
-    return true;
+}
+
+void Calculat_Bitcoin_value(std::multimap<std::string, std::string>& data, std::multimap<std::string, std::string>& data2){
+    float Bitocoin_price = 0;
+    for(std::multimap<std::string, std::string>::iterator it = data.begin(); it != data.end(); it++) {
+        for(std::multimap<std::string, std::string>::iterator it2 = data2.begin(); it2 != data2.end(); it2++) {
+            std::string it2First = it2->first;
+            if (!it2First.empty() && it2First[it2First.length() - 1] == ' ') {
+                it2First.erase(it2First.length() - 1);
+            }
+            if (it->first == it2First) {
+                Bitocoin_price = std::stof(it->second) * std::stof(it2->second);
+                std::cout << it->first << " => " << Bitocoin_price << std::endl;
+            }
+        }
+    }
 }
