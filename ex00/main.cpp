@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 07:59:35 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/03 16:20:29 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/04 09:38:15 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,51 @@ int main(int argc, char **argv){
 
         int lenght = it->first.size();
         if(it->first[lenght - 1] != ' ' || it->second[0] != ' '){
-            std::cout << "Error: input.txt is not in the correct format" << std::endl;
+            std::cerr << "Error: input.txt is not in the correct format" << std::endl;
             return 1;
         }
         if(it->first.size() != 11){
-            std::cout << "Error: input.txt is not in the correct format" << std::endl;
+            std::cerr << "Error: input.txt is not in the correct format" << std::endl;
             return 1;
         }
         if(it->first[4] != '-' || it->first[7] != '-'){
-            std::cout << "Error: input.txt is not in the correct format" << std::endl;
+            std::cerr << "Error: input.txt is not in the correct format" << std::endl;
             return 1;
         }
-       for(size_t i = 0; i < it->second.length(); i++){
-           if(it->second[i] == ' '){
-               i++;
-            if(!isalnum(it->second[i])){
-                std::cout << "Error: input.txt is not in the correct format" << std::endl;
+        for(size_t j = 0; j < it->first.length(); j++){
+            if(j == '-' || j == ' '){
+                j++;
+            }
+            if(isalpha(it->first[j])){
+                std::cerr << "Error: input.txt is not in the correct format" << std::endl;
                 return 1;
             }
-            if(atof(it->second.c_str() + i) == 0){
-                std::cout << "Error: input.txt is not in the correct format" << std::endl;
+        }
+        for(size_t i = 0; i < it->second.length(); i++){
+           if(it->second[i] == ' '){
+               i++;
+            if(isalpha(it->second[i]) || !isdigit(it->second[i])){
+                std::cerr << "Error: input.txt is not in the correct" << std::endl;
+                return 1;
+            }
+            if(atof(it->second.c_str() + i) == 0 || atof(it->second.c_str() + i) > 1000){
+                std::cerr << "Error: input.txt is not in the correct format" << std::endl;
                 return 1;
             }
            }
        }
-        
+        std::stringstream new_(it->first);
+        std::string year, mounth, day;
+        std::getline(new_, year, '-');
+        std::getline(new_, mounth, '-');
+        std::getline(new_, day, ' ');
+        if(is_valid_date(year, mounth, day) == 0){
+            std::cerr << "Error: Invalid Date" << std::endl;
+            return 1;
+        }
     }
     file2.close();
+}
     // std::string line;
     // std::string top;
     // std::getline(file, top);
@@ -93,4 +111,3 @@ int main(int argc, char **argv){
     // }
     
     // file.close();
-}
