@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 07:59:35 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/04 13:28:35 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/07 13:39:32 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
         std::getline(ss, price, '|');
         data2.insert(std::make_pair(date, price));
     }
-    validateData(data2);
+    // validateData(data2);
     Calculat_Bitcoin_value(data, data2);
     file2.close();
     file.close();
