@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:26 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/08 22:18:57 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:22:01 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int main(int ac, char **av){
     }
         if (!check_isnumber(av))
             return 0;
-        std::vector<std::string> v;
-        for (int i = 1; i < ac; i++)
-        {
-            v.push_back(av[i]);
-        }
+        std::vector<int> v;
+        for(int i = 1; av[i]; i++)
+            v.push_back(std::atoi(av[i]));
         for(int j = 0; j < ac - 1; j++)
             std::cout << v[j] << " ";
         std::cout << std::endl;
