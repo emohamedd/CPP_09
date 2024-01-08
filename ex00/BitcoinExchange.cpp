@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 10:26:15 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/07 15:33:35 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/08 10:31:45 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int is_valid_date(std::string year, std::string mounth, std::string day){
 bool validateData(std::multimap<std::string, std::string>::iterator it) {
         int length = it->first.size();
         if (it->first[length - 1] != ' ' || it->second[0] != ' ') {
-            std::cerr << "Error: input.txt is not in the correct format" << std::endl;
+            std::cerr << "Error: bad input => " << it->first << std::endl;
             return false;
         }
 
@@ -68,11 +68,11 @@ bool validateData(std::multimap<std::string, std::string>::iterator it) {
             if (it->second[i] == ' ') {
                 i++;
                 if (isalpha(it->second[i]) || !isdigit(it->second[i])) {
-                    std::cerr << "Error: input.txt is not in the correct format" << std::endl;
+                    std::cerr << "Error: not a positive number." << std::endl;
                     return false;
                 }
                 if (std::atof(it->second.c_str()) > 1000) {
-                    std::cerr << "Error: input.txt is not in the correct format" << std::endl;
+                    std::cerr << "Error: too large a number." << std::endl;
                     return false;
                 }
             }
@@ -106,10 +106,15 @@ void Calculat_Bitcoin_value(std::multimap<std::string, std::string>& data, std::
                 std::multimap<std::string, std::string>::iterator it = data.find(it2First);
                 if(it->first == it2First){
                     Bitocoin_price = std::atof(it->second.c_str()) * std::atof(it2->second.c_str());
-                    std::cout << it2->first << " => " << Bitocoin_price << std::endl;
+                    std::cout << it2->first << " => " << it2->second << " = "<<Bitocoin_price << std::endl;
                 }
-                else
-                    std::cerr << "NOT FOUND" << std::endl;
+                else{
+                        std::multimap<std::string, std::string>::iterator itt = data.lower_bound(it2First);
+                        if(itt != data.begin()){
+                            --itt;
+                        }
+                        std::cout << it2->first << " => " << it2->second << " = " <<std::atof(it2->second.c_str()) * std::atof(itt->second.c_str()) << std::endl;
+                }
             }
                 
         }
