@@ -6,7 +6,11 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:30 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/08 11:36:31 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/08 21:50:19 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
+#include <iostream>
+#include <string>
+#include <vector>
