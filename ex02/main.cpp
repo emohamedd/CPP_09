@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:26 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/10 15:03:52 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:06:43 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int check_isnumber(char **av){
     return 1;
 }
 
-std::vector<std::vector<int> > split_vector_in_2(std::vector<std::vector<int> > vec) {
+std::vector<std::vector<int> > pairing(std::vector<std::vector<int> > vec) {
     if (vec.size() == 1) {
         return vec;
     }
@@ -43,7 +43,7 @@ std::vector<std::vector<int> > split_vector_in_2(std::vector<std::vector<int> > 
         sort(tmp.begin(), tmp.end());
         result.push_back(tmp);
     }
-    return split_vector_in_2(result);
+    return pairing(result);
 }
 int main(int ac, char **av){
     if(ac < 2){
@@ -58,7 +58,7 @@ int main(int ac, char **av){
             vectored.push_back(num);
             main_v.push_back(vectored);
         }
-        std::vector<std::vector<int> > result = split_vector_in_2(main_v);
+        std::vector<std::vector<int> > result = pairing(main_v);
         for(size_t i = 0; i < result.size(); i++){
             for(size_t j = 0; j < result[i].size(); j++){
                 std::cout << result[i][j] << " ";
