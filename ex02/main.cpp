@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:26 by emohamed          #+#    #+#             */
-/*   Updated: 2024/01/09 13:22:44 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:03:52 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ int check_isnumber(char **av){
     return 1;
 }
 
+std::vector<std::vector<int> > split_vector_in_2(std::vector<std::vector<int> > vec) {
+    if (vec.size() == 1) {
+        return vec;
+    }
+    
+    if (vec.size() % 2 != 0){
+        std::cerr << "Error: bad input => " << vec.size() << std::endl;
+        exit(0);
+    }
+    std::vector<std::vector<int> > result;
+    for (size_t i = 0; i < vec.size(); i += 2){
+        std::vector<int> tmp;
+        for (size_t j = 0; j < vec[i].size(); j++){
+            tmp.push_back(vec[i][j]);
+            tmp.push_back(vec[i + 1][j]);
+        }
+        sort(tmp.begin(), tmp.end());
+        result.push_back(tmp);
+    }
+    return split_vector_in_2(result);
+}
 int main(int ac, char **av){
     if(ac < 2){
         std::cerr << "U need at least 2 elements" << std::endl;
@@ -37,9 +58,11 @@ int main(int ac, char **av){
             vectored.push_back(num);
             main_v.push_back(vectored);
         }
-
-        for(size_t i = 0; i < main_v.size(); i++){
-            std::cout << main_v[i][0] << " ";
+        std::vector<std::vector<int> > result = split_vector_in_2(main_v);
+        for(size_t i = 0; i < result.size(); i++){
+            for(size_t j = 0; j < result[i].size(); j++){
+                std::cout << result[i][j] << " ";
+            }
         }
         std::cout << std::endl;
 }
