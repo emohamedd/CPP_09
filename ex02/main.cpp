@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:26 by emohamed          #+#    #+#             */
-/*   Updated: 2024/04/22 12:14:10 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:42:08 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void check_isnumber(char **av){
         }
     }
 }
-
 void splitVector(std::vector<std::vector<int> >& vec, std::vector<int> remain_vector, std::vector<std::vector<int> > chain, std::vector<std::vector<int> > pend){
     
     if (vec.empty()) {
