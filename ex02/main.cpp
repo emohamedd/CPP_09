@@ -6,7 +6,7 @@
 /*   By: emohamed <emohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:36:26 by emohamed          #+#    #+#             */
-/*   Updated: 2024/04/22 10:37:17 by emohamed         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:07:20 by emohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,16 @@ void check_isnumber(char **av){
 
 void printVec(std::vector<int> vec)
 {
-    std::cout << " { ";
     for (size_t i = 0; i < vec.size(); i++)
     {
         std::cout << vec[i] << " ";
     }
-    std::cout << " } " << std::endl;
 }
 void Print_vec_of_vec(std::vector<std::vector<int> > vec){
-    std::cout << "{" << std::endl;
     for (size_t i = 0; i < vec.size(); i++)
     {
         printVec(vec[i]);
     }
-    std::cout << "}" << std::endl;
 }
 std::vector<int> mergeVec(std::vector<int> vec1, std::vector<int> vec2)
 {
@@ -80,16 +76,9 @@ void splitVector(std::vector<std::vector<int> >& vec, std::vector<int> remain_ve
             pend.push_back(vec[i]);
         }
     }
-    // std::cout << "** REMAIN :**" << std::endl;
-    // printVec(remain_vector);
-    // std::cout << "****" << std::endl;
         if (!remain_vector.empty()) {
             pend.push_back(remain_vector);
         }
-    // std::cout << " --- chain : ---" << std::endl;
-    // Print_vec_of_vec(chain);
-    // std::cout << "--- Pend : ---" << std::endl;
-    // Print_vec_of_vec(pend);
     
     for (size_t i = 0; i < pend.size(); i++) {
         std::vector<std::vector<int> >::iterator it = std::lower_bound(chain.begin(), chain.end(), pend[i]);
@@ -98,7 +87,7 @@ void splitVector(std::vector<std::vector<int> >& vec, std::vector<int> remain_ve
     vec = chain;
 }
 
-void pairElements(std::vector<std::vector<int> >& main_vector)
+void Ford_J(std::vector<std::vector<int> >& main_vector)
 {
     if (main_vector.size() == 1)
     {
@@ -106,7 +95,6 @@ void pairElements(std::vector<std::vector<int> >& main_vector)
         return; 
     }
     
-    std::cerr << "FORWARD RECUSION START\n";
     std::vector<std::vector<int> > new_vector;
     std::vector<int> remain_vector;
     
@@ -122,27 +110,11 @@ void pairElements(std::vector<std::vector<int> >& main_vector)
     
     main_vector = new_vector;
     
-    pairElements(main_vector);
+    Ford_J(main_vector);
     
-
-    // step 2
-    
-    // std::cerr << "REVERSE RECUSION START\n";
-
     std::vector< std::vector<int> > pend;
     std::vector< std::vector<int> > chain;
     splitVector(main_vector, remain_vector, chain, pend);
-    
-    std::cout << " --- main_vector : ---" << std::endl;
-    Print_vec_of_vec(main_vector);
-    // know i want to print what happend in the splitVector function
-
-    // loop over main_vector
-    // split main_vector from the half and push it to pend and chain the odd index to main and even index to pend
-    // check if remain_vector is not empty push it to pend
-    // loop over pend and push it to chain using lower_bound and insert
-    // main_vector = chain
-    // printVec(remain_vector);
 }
 
 int main(int ac, char **av){
@@ -161,7 +133,12 @@ int main(int ac, char **av){
         main_vector.push_back(sub_vector);
     }
     
-    pairElements(main_vector);
+    std::cout << RED << "---- Before : ----"  <<  RESET <<std::endl;
+    Print_vec_of_vec(main_vector);
+    Ford_J(main_vector);
+    std::cout << std::endl;
+    std::cout << GREEN << "---- After : ----"  <<  RESET <<std::endl;
+    Print_vec_of_vec(main_vector);
     
     return 0;
 }
